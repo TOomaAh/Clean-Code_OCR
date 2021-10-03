@@ -2,6 +2,8 @@ package com.cleancode;
 
 import java.io.IOException;
 import java.lang.System.Logger;
+import java.security.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +14,21 @@ public class App
 {
     public static void main( String[] args )
     {
+        Writer writer = new Writer();
+
+        List<Integer> test = new ArrayList<>();
+        test.add(2);
+        test.add(2);
+        test.add(2);
+        test.add(2);
+        test.add(2);
+        test.add(2);
+        test.add(2);
+        test.add(2);
+        test.add(2);
+
+        Code c = new Code(test);
+        writer.writeContent(c.toString());
 
         Reader reader = new Reader("./entry (1).txt");
         try{
@@ -20,12 +37,12 @@ public class App
             Parser parser = new Parser(file);
             List<Entry> entries = parser.parse();
             for (Entry entry : entries){
-                StringBuilder stringBuilder = new StringBuilder();
+                List<Integer> codes = new ArrayList<>();
                 for (Item item : entry.getItems()){
-                    stringBuilder.append(parser.translate(item));
+                    codes.add(parser.translate(item));
                 }
-                Code code = new Code(stringBuilder.toString());
-                System.out.println(code);
+                Code code = new Code(codes);
+                writer.writeContent(code.toString());
             }
 
 
