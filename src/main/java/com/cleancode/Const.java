@@ -24,6 +24,13 @@ public class Const {
     public static final Integer COLS = 3;
     public static final Integer MAX_COLS = 27;
 
+
+
+    public static final Integer MAX_ENTRIES = 100;
+
+    public static final Integer MAX_NUMBER_PER_ENTRY = 9;
+
+
     public static final String OUTPUT_FILE = "result_%d.txt";
     public static final String ERROR = "ERR";
     public static final String ILLISIBLE = "ILL";

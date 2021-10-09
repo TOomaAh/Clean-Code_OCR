@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cleancode.Models.Code;
+import com.cleancode.Models.File;
+import com.cleancode.Reader.Reader;
+
 import static org.junit.Assert.*;
 
 /**
@@ -59,7 +63,7 @@ public class AppTest {
         try {
             String content = reader.getFileContent();
             File file = new File(content, reader.getNbrLine());
-            assertTrue(file.getNbrCode() >= 1 && file.getNbrCode() <=25);
+            assertTrue(  1 <= file.getNbrEntry() && file.getNbrEntry() <= 100);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -67,20 +71,11 @@ public class AppTest {
 
     @Test
     public void shouldReturn1to9() {
-        Reader reader = new Reader("./testFile1.txt");
         try {
-            String content = reader.getFileContent();
-            File file = new File(content, reader.getNbrLine());
-            Parser parser = new Parser(file);
-            List<Entry> entries = parser.parse();
-            for (Entry entry : entries) {
-                List<Integer> codes = new ArrayList<>();
-                for (Item item : entry.getItems()) {
-                    codes.add(parser.translate(item));
-                }
-                Code code = new Code(codes);
-                assertEquals("123456789\n", code.toString());
-            }
+            OCR ocr = new OCR("./testFile1.txt");
+            List<Code> codes = ocr.getAllCode();
+            Code code = codes.get(0);
+            assertEquals("123456789\n", code.format());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -88,20 +83,11 @@ public class AppTest {
 
     @Test
     public void shouldReturnInputPlusErr(){
-        Reader reader = new Reader("./testFile2.txt");
         try {
-            String content = reader.getFileContent();
-            File file = new File(content, reader.getNbrLine());
-            Parser parser = new Parser(file);
-            List<Entry> entries = parser.parse();
-            for (Entry entry : entries) {
-                List<Integer> codes = new ArrayList<>();
-                for (Item item : entry.getItems()) {
-                    codes.add(parser.translate(item));
-                }
-                Code code = new Code(codes);
-                assertEquals("223456789\tERR\n", code.toString());
-            }
+            OCR ocr = new OCR("./testFile2.txt");
+            List<Code> codes = ocr.getAllCode();
+            Code code = codes.get(0);
+            assertEquals("223456789\tERR\n", code.format());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -109,21 +95,13 @@ public class AppTest {
 
     @Test
     public void shouldReturnInputPlusIll(){
-        Reader reader = new Reader("./testFile3.txt");
-        try {
-            String content = reader.getFileContent();
-            File file = new File(content, reader.getNbrLine());
-            Parser parser = new Parser(file);
-            List<Entry> entries = parser.parse();
-            for (Entry entry : entries) {
-                List<Integer> codes = new ArrayList<>();
-                for (Item item : entry.getItems()) {
-                    codes.add(parser.translate(item));
-                }
-                Code code = new Code(codes);
-                assertEquals("?23456789\tILL\n", code.toString());
-            }
-        } catch (IOException e) {
+
+        try{
+            OCR ocr = new OCR("./testFile3.txt");
+            List<Code> codes = ocr.getAllCode();
+            Code code = codes.get(0);
+            assertEquals("?23456789\tILL\n", code.format());
+        }catch(IOException e){
             e.printStackTrace();
         }
     }

@@ -1,7 +1,9 @@
-package com.cleancode;
+package com.cleancode.Models;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.cleancode.Const;
 
 public class Item {
     private List<Character> items;

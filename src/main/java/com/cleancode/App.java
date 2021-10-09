@@ -1,36 +1,34 @@
 package com.cleancode;
 
 import java.io.IOException;
-import java.lang.System.Logger;
-import java.security.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  * Hello world!
  *
  */
 public class App
 {
+
+    private static void checkHasArgs(String[] args){
+        if (args.length < 1){
+            LOGGER.log(Level.SEVERE, "Please specify file");
+            System.exit(-1);
+        }
+    }
+
+    private static final Logger LOGGER = Logger.getLogger( App.class.getName() );
     public static void main( String[] args )
     {
-        Writer writer = new Writer();
-        Reader reader = new Reader("./entry (1).txt");
+
+        checkHasArgs(args);
         try{
-            String content = reader.getFileContent();
-            File file = new File(content, reader.getNbrLine());
-            Parser parser = new Parser(file);
-            List<Entry> entries = parser.parse();
-            for (Entry entry : entries){
-                List<Integer> codes = new ArrayList<>();
-                for (Item item : entry.getItems()){
-                    codes.add(parser.translate(item));
-                }
-                Code code = new Code(codes);
-                writer.writeContent(code.toString());
-            }
+            OCR ocr = new OCR(args[0]);
+            ocr.run();
         }catch(IOException e){
-            e.printStackTrace();
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE,"Cannot open your file");
+            System.exit(-1);
         }
     }
 }

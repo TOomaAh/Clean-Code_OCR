@@ -1,13 +1,15 @@
-package com.cleancode;
+package com.cleancode.Writer;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Writer {
+import com.cleancode.App;
+import com.cleancode.Const;
+
+public class Writer implements WriterImpl {
 
     private String filename;
     private File file;
@@ -24,10 +26,16 @@ public class Writer {
 
 
     private void createFile() throws IOException{
-        this.file.createNewFile();
+        if (this.file.createNewFile()){
+            Logger.getLogger(App.class.getName()).log(Level.INFO, String.format("File %s created", getFilename()));
+        }
     }
 
+    public String getFilename(){
+        return filename;
+    }
 
+    @Override
     public void writeContent(String content){
         FileWriter fileWriter = null;
         try{
@@ -35,14 +43,15 @@ public class Writer {
             fileWriter = new FileWriter(file, true);
             fileWriter.write(content);
         }catch(IOException e){
-            System.err.println("Cannot create file");
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE,"Cannot create file");
+            System.exit(-1);
         }finally{
             if (fileWriter != null){
                 try {
                     fileWriter.close();
                 } catch (IOException e) {
-                    System.err.println("Cannot close file");
-                    e.printStackTrace();
+                    Logger.getLogger(App.class.getName()).log(Level.SEVERE,"Cannot close file");
+                    System.exit(-1);
                 }
             }
         }

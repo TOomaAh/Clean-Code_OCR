@@ -1,4 +1,4 @@
-package com.cleancode;
+package com.cleancode.Models;
 
 import java.util.List;
 

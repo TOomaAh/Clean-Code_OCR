@@ -1,9 +1,8 @@
-package com.cleancode;
+package com.cleancode.Models;
 
-import java.io.Console;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+
+import com.cleancode.Const;
 
 public class Code {
 
@@ -31,9 +30,7 @@ public class Code {
         return value.contains(Const.ILL_VALUE);
     }
 
-
-    @Override
-    public String toString() {
+    public String format(){
         StringBuilder stringBuilder = new StringBuilder();
         for (Integer integer : code) {
             if (integer.equals(Const.INT_ERROR))
@@ -44,14 +41,23 @@ public class Code {
 
         if (hasUnreadableValue(stringBuilder.toString())){
             stringBuilder.append(String.format("\t%s", Const.ILLISIBLE));
+        }else{
+            if (!isCorrect()){
+                stringBuilder.append(String.format("\t%s", Const.ERROR));
+            }
         }
-        else if (!isCorrect()){
-            stringBuilder.append(String.format("\t%s", Const.ERROR));
-        }
-
-
-
         stringBuilder.append("\n");
+
+        return stringBuilder.toString();
+    }
+
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Integer integer : code) {
+            stringBuilder.append(integer);
+        }
 
         return stringBuilder.toString();
     }
