@@ -2,3 +2,4 @@
 target/
 .idea/
 ocr.iml
+result_*.txt
