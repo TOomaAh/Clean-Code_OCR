@@ -42,13 +42,14 @@ public class Code {
                 stringBuilder.append(integer);
         }
 
-        if (!isCorrect()){
-            stringBuilder.append(String.format("\t%s", Const.ERROR));
-        }
-
         if (hasUnreadableValue(stringBuilder.toString())){
             stringBuilder.append(String.format("\t%s", Const.ILLISIBLE));
         }
+        else if (!isCorrect()){
+            stringBuilder.append(String.format("\t%s", Const.ERROR));
+        }
+
+
 
         stringBuilder.append("\n");
 

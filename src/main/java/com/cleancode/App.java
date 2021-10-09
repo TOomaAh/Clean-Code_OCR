@@ -15,21 +15,6 @@ public class App
     public static void main( String[] args )
     {
         Writer writer = new Writer();
-
-        List<Integer> test = new ArrayList<>();
-        test.add(2);
-        test.add(2);
-        test.add(2);
-        test.add(2);
-        test.add(2);
-        test.add(2);
-        test.add(2);
-        test.add(2);
-        test.add(2);
-
-        Code c = new Code(test);
-        writer.writeContent(c.toString());
-
         Reader reader = new Reader("./entry (1).txt");
         try{
             String content = reader.getFileContent();
@@ -44,8 +29,6 @@ public class App
                 Code code = new Code(codes);
                 writer.writeContent(code.toString());
             }
-
-
         }catch(IOException e){
             e.printStackTrace();
         }
